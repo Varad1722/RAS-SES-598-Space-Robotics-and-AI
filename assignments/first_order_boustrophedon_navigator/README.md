@@ -1,10 +1,10 @@
 # First-Order Boustrophedon Navigator
-![image](https://github.com/user-attachments/assets/940fc6bc-fcee-4d11-8bc8-d53a650aaf80)
+
 
 In this assignment, you will understand the provided code in ROS2 with Turtlesim, and refactor and/or tune the navigator to implement a precise lawnmower survey (a boustrophedon pattern). The current code will do a pattern shown above, which is not a uniform lawnmower survey. 
 Explore literature on how lawnmower surveys typically look, and modify the code to meet the requirements for a uniform survey. 
 
-## Background
+### Background
 Boustrophedon patterns (from Greek: "ox-turning", like an ox drawing a plow) are fundamental coverage survey trajectories useful in space exploration and Earth observation. These patterns are useful for:
 
 - **Space Exploration**: Rovers could use boustrophedon patterns to systematically survey areas of interest, ensuring complete coverage when searching for geological samples or mapping terrain. However, due to energy constraints, informative paths are usually optimized, and this results in paths that are sparser than complete coverage sampling, and may still produce high-accuracy reconstructions. 
@@ -22,10 +22,10 @@ Boustrophedon patterns (from Greek: "ox-turning", like an ox drawing a plow) are
   
 The efficiency and accuracy of these surveys depend heavily on the robot's ability to follow the prescribed path with minimal deviation (cross-track error). This assignment simulates these real-world challenges in a 2D environment using a first-order dynamical system (the turtlesim robot).
 
-## Objective
+### Objective
 Tune a PD controller to make a first-order system execute the most precise boustrophedon pattern possible. The goal is to minimize the cross-track error while maintaining smooth motion.
 
-## Learning Outcomes
+### Learning Outcomes
 - Understanding PD control parameters and their effects on first-order systems
 - Practical experience with controller tuning
 - Analysis of trajectory tracking performance
@@ -50,40 +50,6 @@ sudo apt install ros-$ROS_DISTRO-rqt*
 ```bash
 pip3 install numpy matplotlib
 ```
-
-## The Challenge
-
-### 1. Controller Tuning (60 points)
-Use rqt_reconfigure to tune the following PD controller parameters in real-time:
-```python
-# Controller parameters to tune
-self.Kp_linear = 1.0   # Proportional gain for linear velocity
-self.Kd_linear = 0.1   # Derivative gain for linear velocity
-self.Kp_angular = 1.0  # Proportional gain for angular velocity
-self.Kd_angular = 0.1  # Derivative gain for angular velocity
-```
-
-Performance Metrics:
-- Average cross-track error (25 points)
-- Maximum cross-track error (15 points)
-- Smoothness of motion (10 points)
-- Cornering performance (10 points)
-
-### 2. Pattern Parameters (20 points)
-Optimize the boustrophedon pattern parameters:
-```python
-# Pattern parameters to tune
-self.spacing = 1.0     # Spacing between lines
-```
-- Coverage efficiency (10 points)
-- Pattern completeness (10 points)
-
-### 3. Analysis and Documentation (20 points)
-Provide a detailed analysis of your tuning process:
-- Methodology used for tuning
-- Performance plots and metrics
-- Challenges encountered and solutions
-- Comparison of different parameter sets
 
 ## Getting Started
 
@@ -137,72 +103,117 @@ Add these topics:
 - /turtle1/cmd_vel/angular/z
 - /cross_track_error
 
-## Evaluation Criteria
+### Usage
 
-1. Controller Performance (60%)
-   - Average cross-track error < 0.2 units (25%)
-   - Maximum cross-track error < 0.5 units (15%)
-   - Smooth velocity profiles (10%)
-   - Clean cornering behavior (10%)
+1. Launch the turtlesim node:
+   ```bash
+   rosrun turtlesim turtlesim_node
+   ```
+2. Run the coverage path planning script:
+   ```bash
+   rosrun your_package_name coverage_path_planner.py
+   ```
+3. Adjust control parameters (`Kp_linear`, `Kd_linear`, `Kp_angular`, `Kd_angular`) in the `config.yaml` file to optimize performance.
 
-2. Pattern Quality (20%)
-   - Even spacing between lines
-   - Complete coverage of target area
-   - Efficient use of space
+---
 
-3. Documentation (20%)
-   - Clear explanation of tuning process
-   - Well-presented performance metrics
-   - Thoughtful analysis of results
+## Parameter Tuning
 
-## Submission Requirements
+Fine-tune the following parameters to achieve desired performance:
 
-1. GitHub Repository:
-   - Commit messages should be descriptive
+- `Kp_linear`: Proportional gain for linear velocity.
+- `Kd_linear`: Derivative gain for linear velocity.
+- `Kp_angular`: Proportional gain for angular velocity.
+- `Kd_angular`: Derivative gain for angular velocity.
+- `spacing`: Distance between adjacent paths.
 
-2. Documentation in Repository:
-   - Update the README.md in your fork with:
-     - Final parameter values with justification
-     - Performance metrics and analysis
-     - Plots showing:
-       - Cross-track error over time
-       - Trajectory plot
-       - Velocity profiles
-     - Discussion of tuning methodology
-     - Challenges and solutions
+---
+## Tuning Process and Performance Analysis
 
-3. Submit your work:
-   - Submit the URL of your GitHub repository
-   - Ensure your repository is public
-   - Final commit should be before the deadline
+### Performance Metrics
 
-## Tips for Success
-- Start with low gains and increase gradually
-- Test one parameter at a time
-- Pay attention to both straight-line tracking and cornering
-- Use rqt_plot to visualize performance in real-time
-- Consider the trade-off between speed and accuracy
+- **Average Cross-track Error**: This measures the average deviation from the desired trajectory across the entire path. A lower value signifies more precise control and a smaller error margin during navigation.
+  
+- **Maximum Cross-track Error**: This captures the largest deviation from the desired path at any given point. It is critical for evaluating extreme performance and ensuring the vehicle does not stray far from the target trajectory.
 
-## Grading Rubric
-- Perfect tracking (cross-track error < 0.2 units): 100%
-- Good tracking (cross-track error < 0.5 units): 90%
-- Acceptable tracking (cross-track error < 0.8 units): 80%
-- Poor tracking (cross-track error > 0.8 units): 60% or lower
+- **Smoothness of Motion**: This refers to the continuity and fluidity of the movement. A smooth motion ensures there are minimal sudden jerks or abrupt changes in direction, contributing to stability and efficiency.
 
-Note: Final grade will also consider documentation quality and analysis depth.
+- **Cornering Performance**: This evaluates the robot's ability to navigate turns or curves without excessive overshoot, oscillations, or difficulty in maintaining the desired path. Good cornering performance ensures precise navigation around sharp turns.
 
-## Extra Credit (10 points)
-Create and implement a custom ROS2 message type to publish detailed performance metrics:
-- Define a custom message type with fields for:
-  - Cross-track error
-  - Current velocity
-  - Distance to next waypoint
-  - Completion percentage
-  - Other relevant metrics
-- Implement the message publisher in your node
-- Document the message structure and usage
+### Pattern Parameters
 
-This will demonstrate understanding of:
-- ROS2 message definitions
-- Custom interface creation
-- Message publishing patterns 
+- **Coverage Efficiency**: This defines how well the robot can cover the target area within a given time, often expressed as the percentage of the area covered relative to the total area. It measures the operational effectiveness of the path.
+
+- **Pattern Completeness**: This metric assesses how thoroughly the robot follows the expected path, ensuring no part of the desired area is left uncovered. A high completion rate reflects a well-executed trajectory following process.
+
+### Detailed Analysis of Tuning Process
+
+### 1. Methodology Used for Tuning
+The tuning process involves adjusting the PID controller parameters — specifically **Kp_linear**, **Kd_linear**, **Kp_angular**, and **Kd_angular** — to minimize cross-track error while optimizing smoothness and cornering performance. Initially, the parameters were set with a broad range of values to understand their impact on performance. Fine-tuning was then done by systematically adjusting each parameter and observing the changes in both linear and angular behaviors.
+
+### 2. Performance Plots and Metrics
+The tuning iterations were analyzed using performance plots, such as the cross-track error over time and the smoothness of motion (which can be visualized as a time-series of velocity and angular velocity profiles). These plots helped identify which parameter adjustments led to smoother, more efficient motion and minimized deviation. Each case's performance metrics were calculated and compared across both spacing scenarios to identify the optimal settings for low error and clean cornering.
+
+### 3. Challenges Encountered and Solutions
+
+- **Challenge 1**: A major challenge was managing the trade-off between speed and accuracy. In some cases, increasing **Kp_linear** to improve straight-line motion led to higher cross-track error in tight turns.  
+  **Solution**: This was addressed by fine-tuning **Kd_angular** to stabilize cornering behavior while maintaining a reasonable linear speed.
+
+- **Challenge 2**: Achieving smooth cornering while maintaining a low cross-track error during sharp turns was also challenging. The robot often exhibited jerky movements or overshot turns.  
+  **Solution**: By decreasing the **Kd_linear** and slightly lowering the **Kp_angular** values, the vehicle's response to changes in direction was smoother, reducing overshoot and improving the cornering performance.
+
+
+## Results
+
+### Self_Spacing 1.0
+
+#### Images
+
+![WhatsApp Image 2025-01-26 at 18 06 16_d7151b4d](https://github.com/user-attachments/assets/ac9c850d-4357-4a9f-a27e-e8e2b9cd7905)
+
+#### Table
+
+
+| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour | Logical Reasoning                                                               |
+|-------------|-----------|-----------|------------|------------|--------------------|----------------------|----------------------------------------------------------------------|
+| Case 1      | 3.8       | 0.4       | 4.2        | 0.5        | Slightly High      | Slightly Smooth     | Low Kp_linear caused slower approach, while higher Kd_angular smoothed cornering. |
+| Case 2      | 4.2       | 0.8       | 4.4        | 0.7        | Moderate           | Smooth              | Balanced Kp/Kd ratio improved both linear and angular control.        |
+| Case 3      | 3.5       | 0.6       | 4.6        | 0.3        | High               | Slightly Rough      | Low Kp_linear and high Kp_angular led to sharp, jerky turns.         |
+| Case 4      | 4.5       | 1.0       | 4.8        | 0.8        | Low                | Clean               | Increased Kp values reduced errors and smoothed transitions.         |
+| Case 5      | 4.0       | 0.7       | 4.9        | 0.6        | Minimal            | Sharp               | Moderate Kd_angular helped achieve sharp but stable cornering.       |
+| Case 6      | 4.7       | 0.9       | 5.2        | 0.5        | Low                | Clean               | High Kp_linear ensured smooth straight-line motion.                  |
+| Case 7      | 4.1       | 0.5       | 4.3        | 0.4        | Slightly High      | Slightly Rough      | Underpowered Kp_linear caused slow corrections.                      |
+
+#### Best Outcome Table
+
+| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour |
+|-------------|-----------|-----------|------------|------------|--------------------|----------------------|
+| Case 6      | 4.7       | 0.9       | 5.2        | 0.5        | Low                | Clean               |
+
+---
+
+### Self_Spacing 0.4
+
+#### Images
+
+![WhatsApp Image 2025-01-26 at 18 23 53_41201180](https://github.com/user-attachments/assets/1cfd222c-b524-4726-ab06-c8ffb1758015)
+
+#### Table
+
+| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour | Logical Reasoning                                                                 |
+|-------------|-----------|-----------|------------|------------|--------------------|----------------------|----------------------------------------------------------------------|
+| Case 1      | 3.9       | 0.3       | 4.1        | 0.6        | Moderate           | Clean               | Low Kd_linear limited velocity smoothing, but Kd_angular corrected angles well. |
+| Case 2      | 4.3       | 0.5       | 4.5        | 0.5        | Low                | Clean               | Balanced Kp values ensured consistent performance.                   |
+| Case 3      | 4.1       | 0.7       | 4.2        | 0.7        | Slightly High      | Slightly Rough      | Overcorrection due to high derivative values.                        |
+| Case 4      | 4.4       | 0.9       | 4.7        | 0.8        | Minimal            | Smooth              | Higher Kp and Kd values reduced errors across paths.                 |
+| Case 5      | 4.0       | 0.4       | 4.6        | 0.3        | Slightly High      | Slightly Rough      | Insufficient Kp_linear caused higher cross-track error.              |
+| Case 6      | 4.6       | 0.6       | 5.0        | 0.7        | Minimal            | Very Sharp          | Optimized Kp_angular achieved precise cornering.                     |
+| Case 7      | 4.2       | 0.8       | 4.8        | 0.6        | Low                | Precise             | Well-balanced values ensured minimal error and precise turns.        |
+
+#### Best Outcome Table
+
+| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour |
+|-------------|-----------|-----------|------------|------------|--------------------|----------------------|
+| Case 6      | 4.6       | 0.6       | 5.0        | 0.7        | Minimal            | Very Sharp          |
+
+---
