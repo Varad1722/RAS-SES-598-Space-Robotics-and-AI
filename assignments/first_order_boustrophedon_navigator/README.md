@@ -173,22 +173,30 @@ The tuning iterations were analyzed using performance plots, such as the cross-t
 
 #### Table
 
-
-| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour | Logical Reasoning                                                               |
-|-------------|-----------|-----------|------------|------------|--------------------|----------------------|----------------------------------------------------------------------|
-| Case 1      | 3.8       | 0.4       | 4.2        | 0.5        | Slightly High      | Slightly Smooth     | Low Kp_linear caused slower approach, while higher Kd_angular smoothed cornering. |
-| Case 2      | 4.2       | 0.8       | 4.4        | 0.7        | Moderate           | Smooth              | Balanced Kp/Kd ratio improved both linear and angular control.        |
-| Case 3      | 3.5       | 0.6       | 4.6        | 0.3        | High               | Slightly Rough      | Low Kp_linear and high Kp_angular led to sharp, jerky turns.         |
-| Case 4      | 4.5       | 1.0       | 4.8        | 0.8        | Low                | Clean               | Increased Kp values reduced errors and smoothed transitions.         |
-| Case 5      | 4.0       | 0.7       | 4.9        | 0.6        | Minimal            | Sharp               | Moderate Kd_angular helped achieve sharp but stable cornering.       |
-| Case 6      | 4.7       | 0.9       | 5.2        | 0.5        | Low                | Clean               | High Kp_linear ensured smooth straight-line motion.                  |
-| Case 7      | 4.1       | 0.5       | 4.3        | 0.4        | Slightly High      | Slightly Rough      | Underpowered Kp_linear caused slow corrections.                      |
+| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error  | Cornering Behaviour | Logic                                                                 |
+|-------------|-----------|-----------|------------|------------|--------------------|---------------------|----------------------------------------------------------------------|
+| Case 1      | 10.0      | 0.5       | 6.0        | 0.2         | Slightly High      | Slightly Smooth     | High Kp_linear caused fast approach; Kd_angular mitigated overshoot. |
+| Case 2      | 9.0       | 1.0       | 7.0        | 0.1         | Moderate           | Smooth              | Balanced Kp/Kd values improved linear and angular response.          |
+| Case 3      | 11.0      | 0.8       | 5.0        | 0.05        | High               | Slightly Rough      | Low Kd_linear allowed jerky corrections despite high Kp_linear.      |
+| Case 4      | 8.0       | 0.5       | 4.0        | 0.04        | Low                | Clean               | Optimal Kp values ensured minimal error and clean cornering.         |
+| Case 5      | 9.0       | 0.6       | 9.0        | 0.01        | Minimal            | Sharp               | High Kp_angular enabled sharp cornering with minimal error.          |
+| Case 6      | 9.5       | 0.3       | 8.0        | 0.05        | Low                | Clean               | Balanced Kp_linear and Kp_angular ensured smooth transitions.        |
+| Case 7      | 8.5       | 0.5       | 6.5        | 0.03        | Slightly High      | Slightly Rough      | Low Kd_angular led to uneven adjustments despite moderate Kp values. |
 
 #### Best Outcome Table
 
-| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour |
+| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour   |
 |-------------|-----------|-----------|------------|------------|--------------------|----------------------|
-| Case 6      | 4.7       | 0.9       | 5.2        | 0.5        | Low                | Clean               |
+| Case 5      | 9.0       | 0.6       | 9.0        | 0.01       | Minimal            | Sharp                |
+
+
+### Images (Best Outcomes)
+##### Turtlesim
+![WhatsApp Image 2025-01-27 at 20 50 22_89a46eb5](https://github.com/user-attachments/assets/8f47931f-3136-4d56-896a-7985c8bd9cb1) 
+##### Rqt_Plots
+![WhatsApp Image 2025-01-27 at 20 54 00_cf5694c4](https://github.com/user-attachments/assets/39453cd1-6d89-4ad5-9e2a-3687d9461eec)
+##### Cross-Track-Error (Avg- 0.056)
+![WhatsApp Image 2025-01-27 at 20 56 58_348a7ce4](https://github.com/user-attachments/assets/455dedcf-9022-4b61-9cca-a9951808db8a)
 
 ---
 
@@ -199,21 +207,30 @@ The tuning iterations were analyzed using performance plots, such as the cross-t
 ![WhatsApp Image 2025-01-26 at 18 23 53_41201180](https://github.com/user-attachments/assets/1cfd222c-b524-4726-ab06-c8ffb1758015)
 
 #### Table
-
-| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour | Logical Reasoning                                                                 |
-|-------------|-----------|-----------|------------|------------|--------------------|----------------------|----------------------------------------------------------------------|
-| Case 1      | 3.9       | 0.3       | 4.1        | 0.6        | Moderate           | Clean               | Low Kd_linear limited velocity smoothing, but Kd_angular corrected angles well. |
-| Case 2      | 4.3       | 0.5       | 4.5        | 0.5        | Low                | Clean               | Balanced Kp values ensured consistent performance.                   |
-| Case 3      | 4.1       | 0.7       | 4.2        | 0.7        | Slightly High      | Slightly Rough      | Overcorrection due to high derivative values.                        |
-| Case 4      | 4.4       | 0.9       | 4.7        | 0.8        | Minimal            | Smooth              | Higher Kp and Kd values reduced errors across paths.                 |
-| Case 5      | 4.0       | 0.4       | 4.6        | 0.3        | Slightly High      | Slightly Rough      | Insufficient Kp_linear caused higher cross-track error.              |
-| Case 6      | 4.6       | 0.6       | 5.0        | 0.7        | Minimal            | Very Sharp          | Optimized Kp_angular achieved precise cornering.                     |
-| Case 7      | 4.2       | 0.8       | 4.8        | 0.6        | Low                | Precise             | Well-balanced values ensured minimal error and precise turns.        |
+| Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error  | Cornering Behaviour | Logic                                                                 |
+|-------------|-----------|-----------|------------|------------|--------------------|---------------------|----------------------------------------------------------------------|
+| Case 1      | 7.0       | 0.3       | 8.0        | 0.5        | Moderate           | Clean               | Low Kd_linear limited velocity smoothing, but Kd_angular corrected angles well. |
+| Case 2      | 12.0      | 0.6       | 12.0       | 0.015      | Low                | Precise             | Well-balanced values ensured minimal error and precise turns.        |
+| Case 3      | 10.0      | 0.4       | 15.0       | 0.01       | Slightly High      | Slightly Rough      | Overcorrection due to high derivative values.                        |
+| Case 4      | 15.0      | 0.8       | 12.0       | 0.05       | Minimal            | Smooth              | Higher Kp and Kd values reduced errors across paths.                 |
+| Case 5      | 10.0      | 0.6       | 10.0       | 0.012      | Slightly High      | Slightly Rough      | Insufficient Kp_linear caused higher cross-track error.              |
+| Case 6      | 9.0       | 0.5       | 11.0       | 0.03       | Minimal            | Very Sharp          | Optimized Kp_angular achieved precise cornering.                     |
+| Case 7      | 8.0       | 0.8       | 9.0        | 0.04       | Low                | Slightly Rough      | Balanced Kp values ensured consistent performance.                   |
 
 #### Best Outcome Table
 
 | Case Number | Kp_linear | Kd_linear | Kp_angular | Kd_angular | Cross-track Error | Cornering Behaviour |
 |-------------|-----------|-----------|------------|------------|--------------------|----------------------|
-| Case 6      | 4.6       | 0.6       | 5.0        | 0.7        | Minimal            | Very Sharp          |
+| Case 2      | 12.0      | 0.6       | 12.0       | 0.015      | Low                | Precise             |
+
+#### Images (Best Outcomes)
+##### Turtlesim
+![WhatsApp Image 2025-01-27 at 21 16 34_49725e4b](https://github.com/user-attachments/assets/9210cad8-b467-4e20-b258-33b9d003ad8d)
+##### rqt_plot
+![WhatsApp Image 2025-01-27 at 21 16 34_9dce3dde](https://github.com/user-attachments/assets/e9b07a25-af2a-461e-a83c-91a0951c7da6)
+##### Cross-Track-Error (Avg-0.056)
+![WhatsApp Image 2025-01-27 at 21 18 01_69ac8af9](https://github.com/user-attachments/assets/cf0f852c-622d-40dd-93d8-01fce6b383e2)
+
+
 
 ---
