@@ -19,11 +19,11 @@ class BoustrophedonController(Node):
         self.declare_parameters(
             namespace='',
             parameters=[
-                ('Kp_linear', 10.0),
-                ('Kd_linear', 0.1),
-                ('Kp_angular', 5.0),
-                ('Kd_angular', 0.2),
-                ('spacing', 1.0)
+                ('Kp_linear',10.0),
+                ('Kd_linear', 0.6),
+                ('Kp_angular', 10.0),
+                ('Kd_angular', 0.018),
+                ('spacing', 0.4)
             ]
         )
         
@@ -196,7 +196,7 @@ class BoustrophedonController(Node):
 
         # Create and publish velocity command
         vel_msg = Twist()
-        vel_msg.linear.x = min(linear_velocity, 2.0)  # Limit maximum speed
+        vel_msg.linear.x = min(linear_velocity, 1.5)  # Limit maximum speed
         vel_msg.angular.z = angular_velocity
         self.velocity_publisher.publish(vel_msg)
 
