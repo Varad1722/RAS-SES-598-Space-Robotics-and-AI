@@ -3,8 +3,7 @@
 ## [Final Video] 
 
 
-https://github.com/user-attachments/assets/f8962c92-dc78-41a7-baea-dab198ccef21
-
+https://github.com/user-attachments/assets/5eca81a7-c190-4f94-b20d-1b971700ad82
 
 
 ## Overview
@@ -80,23 +79,28 @@ Arrow lengths are proportional to force magnitudes.
 
 ### Cart-Pole LQR Tuning - Test Cases and Observations
 
-| **Test Case** | **Q Matrix**            | **R Matrix** | **System Behavior** | **Logic / Cause of Outcome** |
-|--------------|--------------------------|-------------|---------------------|------------------------------|
-| 1  | [2, 1, 20, 15]       | [0.1]  | Highly unstable, pole falls within 2 seconds. | Low Q values result in weak state feedback, and R is too small, making control effort weak. |
-| 2  | [5, 1.5, 50, 20]     | [0.1]  | Slightly improved, but cart oscillates aggressively. | Increased Q[2] (pole angle) helps, but Q[0] (cart position) is still low, causing instability. |
-| 3  | [10, 5, 100, 30]     | [0.2]  | Pole lasts longer (~5 seconds), but oscillations grow. | Higher Q[2] reduces pole falling, but Q[0] and Q[3] (angular velocity) are still insufficient. |
-| 4  | [15, 5, 200, 50]     | [0.2]  | Moderate stability, but cart still overshoots. | Cart movement is still aggressive due to low Q[0], and R is too small to dampen control efforts. |
-| 5  | [20, 10, 500, 100]   | [0.3]  | Cart stabilizes slightly, pole remains up longer (~10 seconds). | Q[2] and Q[3] help the pole stay up longer, but cart position still drifts. |
-| 6  | [30, 10, 700, 150]   | [0.3]  | Better damping, but slight overcorrections. | Higher Q[2] stabilizes the pole more, but low R means excessive control force, leading to jitter. |
-| 7  | [40, 5, 1000, 250]   | [0.35] | Stable for 20+ seconds, oscillations reduced. | Higher Q[3] stabilizes angular velocity, and moderate R helps prevent excessive control inputs. |
-| 8  | [45, 2, 1200, 300]   | [0.38] | Nearly stable, slight cart drift. | Balancing control force and state weight helps, but further fine-tuning needed. |
-| 9  | [48, 1, 1400, 350]   | [0.39] | Almost ideal, small oscillations remain. | Fine-tuning Q[2] and Q[3] further improves response, but slight oscillations persist. |
-| 10 | [50, 1, 1500, 400]   | [0.4]  | **Fully stable! Pole stands indefinitely.** | Optimized balance: High Q[2] & Q[3] keep the pole stable, Q[0] minimizes cart movement, and R prevents excessive control force. |
+# Cart-Pole LQR Tuning Test Cases
+
+| Test Case | Q Values (x, ẋ, θ, θ̇) | R Value | Stability | Observations |
+|-----------|---------------------|--------|-----------|-------------|
+| 1  | [0.5, 0.5, 2, 2]  | [0.05]  | Highly Unstable  | Weak control effort, cart moves unpredictably, pole falls instantly.  |
+| 2  | [1, 1, 5, 2]      | [0.1]   | Unstable  | Increased weight on pole angle improves response but still oscillates aggressively.  |
+| 3  | [2, 2, 10, 5]     | [0.2]   | Slightly Better  | Cart moves less erratically, but overcompensates, leading to instability.  |
+| 4  | [3, 3, 15, 7]     | [0.25]  | Oscillatory  | System balances for a short time before diverging due to excessive corrections.  |
+| 5  | [4, 4, 20, 10]    | [0.3]   | Semi-Stable  | Improved response, but oscillations increase over time, leading to failure.  |
+| 6  | [5, 5, 25, 12]    | [0.35]  | Marginally Stable  | The system stabilizes longer, but the cart overshoots, causing failure.  |
+| 7  | [6, 6, 30, 15]    | [0.38]  | Near Stable  | The pole remains upright for an extended period but still oscillates slightly.  |
+| 8  | [6.5, 6.5, 35, 17] | [0.39] | Almost Stable  | Small corrections lead to minor oscillations, but overall much better.  |
+| 9  | [7, 7, 40, 20]    | [0.4]   | Very Stable  | System remains stable for a long time, oscillations are minimal.  |
+| 10 | **[7, 7, 10, 10]** | **[0.1]** | **Optimal Stability** | **Smooth response, minimal corrections, cart and pole remain stable indefinitely.** |
+
+
+
 
 ### 🏁 Final Tuning Values
 
-- **Q Matrix:** [50, 1, 1500, 400]
-- **R Matrix:** [0.4]
+- **Q Matrix:** [7.0,7.0,10.0,10.0]
+- **R Matrix:** [0.1]
 - **Performance:** Stable cart-pole system with minimal cart movement and no overshooting.
 
 ---
@@ -114,4 +118,4 @@ Through systematic fine-tuning of the LQR cost matrices
 By iterating through multiple test cases, I identified that increasing the weight on pole angle and angular velocity significantly improved stability, preventing the pole from tipping over prematurely. Additionally, setting a moderate control effort cost (R) ensured smooth force application without excessive corrections that could destabilize the system.
 
 The final optimized values, 
-𝑄=[50,1,1500,400] and 𝑅=[0.4] resulted in the most stable configuration, allowing the cart-pole system to remain balanced for extended durations. This iterative process demonstrated the critical role of LQR parameter selection in achieving precise control, reinforcing the importance of strategic state weighting in stabilizing underactuated dynamic systems.
+𝑄=[7.0,7.0,10.0,10.0] and 𝑅=[0.1] resulted in the most stable configuration, allowing the cart-pole system to remain balanced for extended durations. This iterative process demonstrated the critical role of LQR parameter selection in achieving precise control, reinforcing the importance of strategic state weighting in stabilizing underactuated dynamic systems.
