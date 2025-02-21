@@ -108,7 +108,11 @@ Arrow lengths are proportional to force magnitudes.
 Final Case 
 
 
-![image](https://github.com/user-attachments/assets/a0908078-502e-4035-a33b-b9379718006a)
+![image](https://github.com/user-attachments/assets/45aeab66-1216-479a-98be-e0b1f91c8609)
+
+![image](https://github.com/user-attachments/assets/62fb2b9a-2956-4641-8d1c-97719e2a808c)
+
+
 
 
 ## Conclusion
